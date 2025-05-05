@@ -1,0 +1,49 @@
+﻿@model TimesheetSystem.UI.Models.TimesheetPageViewModel
+
+@{
+    ViewData["Title"] = "Timesheet";
+}
+
+<h2>Timesheet</h2>
+
+<!-- Form to Create New TimeLog -->
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="NewLog.Date"></label>
+        <input asp-for="NewLog.Date" class="form-control" type="date" />
+    </div>
+    <div class="form-group">
+        <label asp-for="NewLog.LoginTime"></label>
+        <input asp-for="NewLog.LoginTime" class="form-control" type="time" />
+    </div>
+    <div class="form-group">
+        <label asp-for="NewLog.LogoutTime"></label>
+        <input asp-for="NewLog.LogoutTime" class="form-control" type="time" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Submit</button>
+</form>
+
+<hr />
+
+<!-- Table to Display Time Logs -->
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Login Time</th>
+            <th>Logout Time</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var log in Model.TimeLogs)
+        {
+            <tr>
+                <td>@log.UserName</td>
+                <td>@log.LoginTime?.ToString("HH:mm")</td>
+                <td>@log.LogoutTime?.ToString("HH:mm")</td>
+                <td>@log.Date.ToString("yyyy-MM-dd")</td>
+            </tr>
+        }
+    </tbody>
+</table>

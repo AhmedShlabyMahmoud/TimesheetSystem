@@ -1,0 +1,105 @@
+﻿@model RegisterViewModel
+<div class="login-container">
+    <h1>User Registration</h1>
+
+    @if (ViewData["Error"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Error
+        </div>
+    }
+
+    @using (Html.BeginForm("Register", "User", FormMethod.Post, new { @class = "login-form" }))
+    {
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Name" })
+        </div>
+
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+        </div>
+
+        <div class="form-group">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+        </div>
+
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = "Mobile Number" })
+        </div>
+
+        <button type="submit" class="login-button">REGISTER</button>
+    }
+
+    <div class="register-link">
+        Already have an account? <a asp-area="" asp-controller="User" asp-action="Login">Login</a>
+    </div>
+</div>
+
+<style>
+    .login-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        background: white;
+        text-align: center;
+    }
+
+    .login-container h1 {
+        margin-bottom: 30px;
+        color: #333;
+        font-size: 24px;
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-control {
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #4a90e2;
+    }
+
+    .login-button {
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        padding: 15px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .login-button:hover {
+        background-color: #357ab8;
+    }
+
+    .register-link {
+        margin-top: 20px;
+        color: #666;
+    }
+
+    .register-link a {
+        color: #4a90e2;
+        text-decoration: none;
+    }
+
+    .register-link a:hover {
+        text-decoration: underline;
+    }
+</style>

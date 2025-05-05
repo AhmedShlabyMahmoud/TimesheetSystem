@@ -1,0 +1,190 @@
+﻿@model TimesheetSystem.UI.Models.CreateTimeLogViewModel
+
+@{
+    ViewData["Title"] = "Create Time Log";
+}
+
+<div class="login-container">
+    <h1>Create Time Log</h1>
+
+    @if (ViewData["Error"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Error
+        </div>
+    }
+
+    <form asp-action="Create" method="post" class="login-form">
+        <div class="form-group">
+            <input asp-for="Date" class="form-control" type="date" placeholder="Date" />
+        </div>
+        <div class="form-group">
+            <input asp-for="LoginTime" class="form-control" type="time" placeholder="Login Time" />
+        </div>
+        <div class="form-group">
+            <input asp-for="LogoutTime" class="form-control" type="time" placeholder="Logout Time" />
+        </div>
+        <button type="submit" class="login-button">SUBMIT</button>
+    </form>
+</div>
+
+@if (Model.TimeLogs != null && Model.TimeLogs.Any())
+{
+    <div class="data-container">
+        <h3>Time Logs</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Login Time</th>
+                    <th>Logout Time</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var log in Model.TimeLogs)
+                {
+                    <tr>
+                        <td>@log.UserName</td>
+                        <td>@log.LoginTime?.ToShortTimeString()</td>
+                        <td>@log.LogoutTime?.ToShortTimeString()</td>
+                        <td>@log.Date.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="pagination">
+            <a class="pagination-btn @(Model.PageNumber == 0 ? "disabled" : "")"
+               href="@Url.Action("Create", new { pageNumber = Model.PageNumber - 1, pageSize = Model.PageSize })">Previous</a>
+
+            <span>Page @(Model.PageNumber + 1) of @Model.TotalPages</span>
+
+            <a class="pagination-btn @(Model.PageNumber == Model.TotalPages - 1 ? "disabled" : "")"
+               href="@Url.Action("Create", new { pageNumber = Model.PageNumber + 1, pageSize = Model.PageSize })">Next</a>
+        </div>
+    </div>
+}
+
+<style>
+    .login-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        background: white;
+        text-align: center;
+    }
+
+    .login-container h1 {
+        margin-bottom: 30px;
+        color: #333;
+        font-size: 24px;
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-control {
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #4a90e2;
+    }
+
+    .login-button {
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        padding: 15px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .login-button:hover {
+        background-color: #357ab8;
+    }
+
+    .data-container {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        background: white;
+    }
+
+    .data-container h3 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    .data-table th, .data-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .data-table th {
+        background-color: #f8f9fa;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .data-table tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+ /*    .pagination-btn {
+        padding: 8px 16px;
+        background-color: #4a90e2;
+        color: white;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    .pagination-btn:hover:not(.disabled) {
+        background-color: #357ab8;
+    } */
+
+ /*    .pagination-btn.disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+        opacity: 0.6;
+    } */
+
+    .pagination span {
+        color: #666;
+    } 
+</style>
